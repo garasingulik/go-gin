@@ -1,13 +1,24 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"gsk/app/config"
+	logger "gsk/app/lib"
+	router "gsk/app/routes"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run() // listen and serve on 0.0.0.0:8080
+	// Create logger
+	log := logger.CreateLogger("main")
+
+	// Init Config
+	if err := config.Init(); err != nil {
+		log.Errorf("%v", err)
+		return
+	}
+
+	// Logging environment
+	log.Infof("ENVIRONMENT: %v", config.App.Environment)
+
+	// Init Routes
+	router.Init()
 }
