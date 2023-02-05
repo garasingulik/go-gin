@@ -19,7 +19,7 @@ clean:
 	@rm -rf output
 
 test:
-	@go mod vendor && go test ./... -run ''
+	@go mod vendor && go test ./...
 
 run:
 	@./output/$(NAME)
